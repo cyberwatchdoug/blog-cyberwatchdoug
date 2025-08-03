@@ -1,0 +1,36 @@
+# Project information
+site_name: CyberWatchDoug
+site_url: https://blog.cyberwatchdoug.com
+
+# Configuration
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: teal
+  features:
+    - navigation.tabs
+    - search.suggest
+
+# Extra CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Plugins
+plugins:
+  - search
+  - blog:
+      blog_dir: .
+
+# Markdown Extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    # options:
+    #   custom_icons:
+    #     - overrides/.icons
+nav:
+  - Home: index.md
