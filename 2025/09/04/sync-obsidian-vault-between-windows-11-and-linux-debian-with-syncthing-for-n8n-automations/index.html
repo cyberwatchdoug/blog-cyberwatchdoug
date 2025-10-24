@@ -1,0 +1,1512 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Learn how to sync your Obsidian vault between Windows 11 and Debian LXC on Proxmox using Syncthing. Automate your notes with n8n workflows for powerful knowledge management.
+">
+      
+      
+      
+        <link rel="canonical" href="https://blog.cyberwatchdoug.com/2025/09/04/sync-obsidian-vault-between-windows-11-and-linux-debian-with-syncthing-for-n8n-automations/">
+      
+      
+        <link rel="prev" href="../../../08/25/probabilistic-vs-deterministic-identity-security/">
+      
+      
+        <link rel="next" href="../../09/setting-up-k3s-on-linux---quick-tips-to-user-friendly-kubernetes/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Sync Obsidian Vault Between Windows 11 and Linux (Debian) with Syncthing for n8n Automations
+ - CyberWatchDoug</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-sync-an-obsidian-vault-between-windows-11-and-linux-debian-lxc-using-syncthing-for-n8n-automations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="CyberWatchDoug" class="md-header__button md-logo" aria-label="CyberWatchDoug" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberWatchDoug
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sync Obsidian Vault Between Windows 11 and Linux (Debian) with Syncthing for n8n Automations
+
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../archive/2025/" class="md-tabs__link">
+          
+  
+  
+  Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../category/1password/" class="md-tabs__link">
+          
+  
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="CyberWatchDoug" class="md-nav__button md-logo" aria-label="CyberWatchDoug" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CyberWatchDoug
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/1password/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1Password
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ansible
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Automation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/azure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/azurecli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/cloudflare/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloudflare
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/dns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DNS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/fluxcd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FluxCD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/homelab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homelab
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/icam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ICAM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Identity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/leadership/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leadership
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linux
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/obsidian/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Obsidian
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/paperless-ngx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Paperless-ngx
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/postgresql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Postgresql
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/proxmox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Proxmox
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/syncthing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Syncthing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/k3s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    k3s
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/n8n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    n8n
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-i-needed-a-cross-platform-obsidian-sync-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why I needed a Cross-Platform Obsidian Sync Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#my-setup-windows-11-debian-lxc-on-proxmox-and-obsidian" class="md-nav__link">
+    <span class="md-ellipsis">
+      My Setup: Windows 11, Debian LXC on Proxmox, and Obsidian
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-syncthing-instead-of-cloud-based-sync-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Syncthing Instead of Cloud-Based Sync Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-configuring-syncthing-on-windows-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing and Configuring Syncthing on Windows 11
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing and Configuring Syncthing on Windows 11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-download-and-install-syncthing-on-windows-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Download and Install Syncthing on Windows 11
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-syncthing-automatically-at-windows-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Run Syncthing Automatically at Windows Startup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-running-syncthing-on-debian-lxc-proxmox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing and Running Syncthing on Debian LXC (Proxmox)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing and Running Syncthing on Debian LXC (Proxmox)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-add-official-syncthing-repository-on-debian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Add Official Syncthing Repository on Debian
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-install-syncthing-with-apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Install Syncthing with apt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-running-syncthing-as-systemd-service-in-debian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Running Syncthing as systemd Service in Debian
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-devices-and-syncing-the-obsidian-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connecting Devices and Syncing the Obsidian Vault
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connecting Devices and Syncing the Obsidian Vault">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-and-adding-syncthing-device-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding and Adding Syncthing Device IDs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-the-obsidian-vault-folder-from-windows-to-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharing the Obsidian Vault Folder from Windows to Linux
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-the-obsidian-folder-and-ignore-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling the '.obsidian' Folder and Ignore Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-syncthing-sync-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifying Syncthing Sync Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verifying Syncthing Sync Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-file-sync-between-windows-11-and-debian-lxc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing File Sync Between Windows 11 and Debian LXC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automating-obsidian-with-n8n-after-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automating Obsidian with n8n After Sync
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-09-04 00:00:00+00:00" class="md-ellipsis">September 4, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/automation/">Automation</a>, 
+                              <a href="../../../../category/n8n/">n8n</a>, 
+                              <a href="../../../../category/syncthing/">Syncthing</a>, 
+                              <a href="../../../../category/obsidian/">Obsidian</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              8 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+
+<h1 id="how-to-sync-an-obsidian-vault-between-windows-11-and-linux-debian-lxc-using-syncthing-for-n8n-automations">How to Sync an Obsidian Vault Between Windows 11 and Linux (Debian LXC) Using Syncthing for n8n Automations</h1>
+<h2 id="why-i-needed-a-cross-platform-obsidian-sync-setup">Why I needed a Cross-Platform Obsidian Sync Setup</h2>
+<p>Keeping an Obsidian vault synced between Windows and Linux can be tricky if you don’t want to rely on third‑party cloud services like Dropbox or Google Drive. I ran into this challenge while trying to keep my various vaults consistent across my Windows 11 desktop (where I do most of my vault work) and a Debian Linux LXC running on Proxmox, where I host my automation tools. My goal wasn’t just simple note syncing, I wanted to unlock powerful n8n workflows that process and automate my notes directly from the server.</p>
+<p>After brainstorming a few options, I landed on Syncthing as the perfect solution. It’s lightweight, private, and runs quietly in the background without any dependency on external services. Even better, I figured out how to start Syncthing automatically on Windows 11 without the annoying terminal popup, while also configuring a persistent Syncthing systemd service inside my Debian LXC. In this post, I’ll walk you through exactly how I set it up and how it powers my Obsidian + n8n automation workflow.</p>
+<!-- more -->
+
+<h2 id="setting-up-the-environment">Setting Up the Environment</h2>
+<h3 id="my-setup-windows-11-debian-lxc-on-proxmox-and-obsidian">My Setup: Windows 11, Debian LXC on Proxmox, and Obsidian</h3>
+<p>My environment is nothing fancy. A simple Windows 11 Pro desktop PC, and my Proxmox device running on old hardware. I have a few LXC's on the device, so my one for n8n isn't alone. Each is accessible through my firewall even though I have my network segmentated with VLANs.</p>
+<h3 id="why-syncthing-instead-of-cloud-based-sync-options">Why Syncthing Instead of Cloud-Based Sync Options</h3>
+<p>I chose to use Syncthing instead of alternative options for the simple reason of self-hosted and private. Plus who doesn't like having a bit of fun with configuration and system administration tasks? Additionally, I wanted a stand-alone Syncthing setup, not just using a community plugin within Obsidian. If I'm going to use a tool I want to enact full control with that tool for how I need it.</p>
+<h2 id="installing-and-configuring-syncthing-on-windows-11">Installing and Configuring Syncthing on Windows 11</h2>
+<h3 id="step-1-download-and-install-syncthing-on-windows-11">Step 1: Download and Install Syncthing on Windows 11</h3>
+<p>Head on over to the official downloads page here: <a href="syncthing.net/downloads/">syncthing.net/downloads/</a>. I chose the Base Syncthing, which is just a zip file with everything needed to run it on my Windows 11 PC. All you need to do after downloading is unzip the folder.</p>
+<p>For me, I took an additional step and copied over the syncthing folder to the following location <code>C:\opt\syncthing\</code> as that is the folder structure I'm used to for installing software.</p>
+<p><em>I should point out, I use the term "install" loosely here, because we aren't actually installing anything. Syncthing is just an executable that we run after it is download.</em></p>
+<h3 id="step-2-run-syncthing-automatically-at-windows-startup">Step 2: Run Syncthing Automatically at Windows Startup</h3>
+<p>Per the documentation, there are multiple ways to achieve running Syncthing automatically at startup in Windows 11. I took the approach of creating a task in Task Scheduler.</p>
+<p>Here is the rather simple way of doing this using PowerShell:</p>
+<pre><code class="language-PowerShell">&lt;#
+.SYNOPSIS
+    Creates or updates a scheduled task to run Syncthing at user login.
+#&gt;
+
+param(
+    [string]$ExePath = &quot;Powershell.exe&quot;,
+    [string]$TaskName = &quot;SyncthingStartup&quot;
+)
+
+try {
+    if (-not (Test-Path $ExePath)) {
+        Write-Error &quot;Syncthing executable not found at $ExePath&quot;
+        exit 1
+    }
+
+    $userName = &quot;$env:USERNAME&quot;
+    $action = New-ScheduledTaskAction -Execute $ExePath -Argument &quot;-WindowStyle Hidden -Command &quot;Start-Process 'C:\opt\syncthing\syncthing.exe' -ArgumentList '--no-console'&quot;&quot;
+    $trigger = New-ScheduledTaskTrigger -AtLogOn
+    $principal = New-ScheduledTaskPrincipal -UserId $userName -LogonType Interactive
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+    # Remove existing task if it exists
+    if (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false
+    }
+
+    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Description &quot;Start Syncthing at user login&quot; -Force
+    Write-Output &quot;Scheduled task '$TaskName' created successfully.&quot;
+}
+catch {
+    Write-Error &quot;Failed to create scheduled task: $_&quot;
+}
+</code></pre>
+<p>Running the Synchthing executable by way of <code>Powershell.exe</code> helped me permanently solve the issue of having a Terminal popup when it ran. This is because the option <code>--no-console</code> is not reliable on Windows 11, and may still cause the launcher to open a console window.</p>
+<p>The other part to fixing this was to set your Default terminal application to <code>Windows Control Host</code> rather then the default <code>Let Windows decide</code>.</p>
+<p>Doing those 2 things made the task schedule work without a Terminal window persistently being opened.</p>
+<h2 id="installing-and-running-syncthing-on-debian-lxc-proxmox">Installing and Running Syncthing on Debian LXC (Proxmox)</h2>
+<p>There's a setup guide on <a href="https://apt.syncthing.net/">https://apt.syncthing.net/</a> you can follow for this step. I'll briefly detail it below.</p>
+<h3 id="step-1-add-official-syncthing-repository-on-debian">Step 1: Add Official Syncthing Repository on Debian</h3>
+<p>Add the release PGP key and the stable-v2 channel to your apt sources:</p>
+<pre><code class="language-bash">sudo mkdir -p /etc/apt/keyrings
+sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+
+echo &quot;deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable-v2&quot; | sudo tee /etc/apt/sources.list.d/syncthing.list
+</code></pre>
+<h3 id="step-2-install-syncthing-with-apt">Step 2: Install Syncthing with apt</h3>
+<p>To install, perform an <code>sudo apt update</code> and then <code>sudo apt install syncthing</code></p>
+<h3 id="step-3-running-syncthing-as-systemd-service-in-debian">Step 3: Running Syncthing as systemd Service in Debian</h3>
+<p>There is a keen distinction to understand here. You can run Syncthing as a systemd service as either a User Service, or as a System Service.</p>
+<p>Running as a User Service ensures that Syncthing only starts after the user has logged into the system.</p>
+<p>Running as a System Service ensure that Syncthing starts at system startup.</p>
+<p>For my setup, I need the latter and did this setup to enable and run Syncthing as a System Service for my user:</p>
+<pre><code class="language-bash">sudo systemctl enable syncthing@doug.service
+sudo systemctl start syncthing@doug.service
+</code></pre>
+<p>replace <code>doug</code> with your username in this case. The reason we perform the system service execution this way is because Syncthing is setup and configured per user, not per system. That's why we don't just run <code>systemctl start syncthing.service</code> here.</p>
+<h2 id="connecting-devices-and-syncing-the-obsidian-vault">Connecting Devices and Syncing the Obsidian Vault</h2>
+<h3 id="finding-and-adding-syncthing-device-ids">Finding and Adding Syncthing Device IDs</h3>
+<p>Syncthing is great for security in that it requires you to perform the setup on both devices that you want to communicate and sync files/folders with. This starts with configuring the Device IDs for each.</p>
+<p>This means I would need the Device ID for my Windows 11 PC, and for my Debian LXC. You can find each easily by just running the <code>syncthing</code> executable on each device. In Windows 11, you can just double click on the <code>syncthing.exe</code> executable and it will open up in the Terminal. What you are looking for is the line with <code>INFO: My ID:</code> and what follows would be the Device ID. Copy this and note which device it is for.</p>
+<p>You can do the same on Debian with just the <code>syncthing</code> command at the CLI. This too will show a similar line to above with the Device ID.</p>
+<p>For Windows 11, with the <code>syncthing.exe</code> still running, open up your browser to the following address: <code>http://localhost:8384</code>. The web GUI runs by default and this is my chosen method in Windows 11 since I'll be doing most of the configuration here going forward. Although I would like to automate these steps in the future so using the CLI is on the horizon for me (more on that to come).</p>
+<p>In the bottom right just click the <code>+ Add Remote Device</code> button, type in a name and paste in the Device ID for your Debian LXC. It won't actually connect successfully until we do the same on the Debian LXC. Remember, we have to configure each device!</p>
+<p>For the Debian LXC, I don't have access to any GUI, so it's CLI time! Here is the flow I did to get things configured:</p>
+<pre><code class="language-bash"># Add the Windows 11 Device using the Device ID:
+syncthing cli config devices add --device-id &lt;WIN11_DEVICE_ID&gt;
+</code></pre>
+<p>If you switch back to your Windows 11 and the Syncthing GUI, you should now see the remote device connected. If not, then you'll have a bit of logs to dig through!</p>
+<h3 id="sharing-the-obsidian-vault-folder-from-windows-to-linux">Sharing the Obsidian Vault Folder from Windows to Linux</h3>
+<p>Before sharing my Obsidian Vault folder from Windows to the Debian LXC, you'll need to check to ensure the default folder path is where you want it to be. In my case I wanted the default folder path to be in <code>/opt/syncthing/</code> and not the default <code>~</code>.</p>
+<p>To do this, open up the configuration file in your favorite editor (vim in my case) and do the following:</p>
+<pre><code class="language-bash">vim ~/.local/state/syncthing/config.xml
+
+# Search for &lt;defaults&gt;, first press /
+/&lt;defaults&gt;
+
+# make sure the 'path=&quot;~&quot;' is the location you want for default folder paths
+</code></pre>
+<p>So my default folder setting looks like the following now:</p>
+<pre><code class="language-xml">&lt;folder id=&quot;&quot; label=&quot;&quot; path=&quot;/opt/syncthing/&quot; type=...&gt;
+</code></pre>
+<p>The next thing was to adjust the <code>autoAcceptFolders</code> setting. I went back into the configuration file on my Debian LXC, found the location for my Windows 11 Device (search for the Device ID), and changed the value for <code>&lt;autoAcceptFolders&gt;&lt;/autoAcceptFolders&gt;</code> from <code>false</code> to <code>true</code>. This file is located in <code>~/.local/state/syncthing/config.xml</code></p>
+<p>Now all I needed to do was add the folder from the GUI on my Windows 11 PC, and it would automatically get added and synced to my Debian LXC.</p>
+<p>Doing this in the GUI is pretty straighforward. Select <code>+Add Folder</code> on the left, type a folder label, and specify the folder path. Then select the "Sharing" tab at the top, and click the box next to the device you want to share the folder with.</p>
+<p>If everything was configured correctly on both devices, you should now see your shared folder from Windows 11 on your Debian LXC.</p>
+<h3 id="handling-the-obsidian-folder-and-ignore-patterns">Handling the '.obsidian' Folder and Ignore Patterns</h3>
+<p>Since I won't be using my Obsidian Vaults on my Debian LXC, I do not need to sync the <code>.obsidian</code> folder. This avoids syncing my UI layout, workspace state, community plugin settings, and several other things that would be important if I planned on opening and using the vault on that device.</p>
+<p>But since I'm not, I'm adding the ignore pattern <code>.obsidian/</code> to my <code>.stignore</code>. You can also do this in the GUI, when editing the folder, under the "Ignore Patterns" tab.</p>
+<h2 id="verifying-syncthing-sync-works">Verifying Syncthing Sync Works</h2>
+<p>To verify, I used a combination of seeing what state the GUI displayed for both the Folder being shared, and the Device. Both should say "Up to Date".</p>
+<p>You can also check your sync location on Debian LXC and verify that your obsidian vault is there now.</p>
+<p>An additional step to test would be creating a new file on each device and confirming that is appears on the other device.</p>
+<h3 id="testing-file-sync-between-windows-11-and-debian-lxc">Testing File Sync Between Windows 11 and Debian LXC</h3>
+<h3 id="common-issues">Common Issues</h3>
+<p>The only issue I encountered was being too bold and creating the folder on my Debian LXC ahead of time. This wouldn't let Syncthing create the folder due to the wrong permissions.</p>
+<p>However, the parent folder needs to provide read+write access for the user if you are running Syncthing as a user service and not a system service.</p>
+<h2 id="automating-obsidian-with-n8n-after-sync">Automating Obsidian with n8n After Sync</h2>
+<p>Now, if your obsidian vault is correctly synced to your Debian LXC, and you happen to also be running n8n on that LXC, then you've got a strong case of building some wicked automation sequences to write files to your obsidian vault.</p>
+<p>In my case, I wanted to automate my Job Hunt tracking. More On this in another post. For now just relish in the fact you have Syncthing setup, working, and can build whatever you would like with n8n to automate things in your vault!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>By combining Syncthing with a Windows 11 workstation and a Debian LXC running on Proxmox, I now have a seamless way to keep my Obsidian vaults perfectly in sync across platforms. More importantly, this setup gave me the foundation to build powerful n8n automations that process and extend my notes without ever leaving my local environment. No cloud lock‑in, no subscription fees — just full control over my data and workflows.</p>
+<p>If you’ve been looking for a reliable way to sync your Obsidian vaults between Windows and Linux, I highly recommend giving Syncthing a try. Once you have syncing in place, the possibilities are endless when paired with n8n workflows. From automated task management to smart daily note summaries and integrations with your favorite tools.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "search.suggest"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
